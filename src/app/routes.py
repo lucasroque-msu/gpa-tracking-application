@@ -20,20 +20,33 @@ import bcrypt
 def index(): 
     return render_template('index.html')
 
-# TODO: from hwk-3
 @app.route('/users/signup', methods=['GET', 'POST'])
 def signup():
-    return "Work in progress..."
-    
-# TODO: from hwk-3
+    form = SignUpForm()
+    if form.validate_on_submit():
+        if form.passwd.data == form.passwd_confirm.data:
+            password_bytes = form.passwd.data.encode()
+            hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
+            user = User(id=form.id.data, name=form.name.data, about=form.about.data, passwd=hashed)
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for('index'))
+    return render_template('signup.html', form=form)
+
 @app.route('/users/login', methods=['GET', 'POST'])
 def login():
-    return "Work in progress..."
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.get(form.id.data)
+        if user and bcrypt.checkpw(form.passwd.data.encode(), user.passwd):
+            login_user(user)
+            return redirect(url_for('list_enrollments'))
+    return render_template('login.html', form=form)
 
-# TODO: from hwk-3
 @app.route('/users/signout', methods=['GET', 'POST'])
 def signout():
-    return "Work in progress..."
+    logout_user()
+    return redirect(url_for('index'))
 
 # TODO
 @app.route('/enrollments')
