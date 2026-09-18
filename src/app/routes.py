@@ -24,6 +24,9 @@ def index():
 def signup():
     form = SignUpForm()
     if form.validate_on_submit():
+        if User.query.get(form.id.data):                
+                flash("Not a valid ID. Please try again.")
+                return render_template('signup.html', form=form)
         if form.passwd.data == form.passwd_confirm.data:
             password_bytes = form.passwd.data.encode()
             hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
