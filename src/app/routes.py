@@ -1,7 +1,7 @@
 '''
 CS3250 - Software Development Methods and Tools
 Instructor: Thyago Mota
-Student: 
+Student: Samuel Simon, Lucas Roque, Sagun Shrestha
 Description: Project 1 - GPA Calculator
 '''
 
@@ -10,7 +10,7 @@ from app.models import User, Course, Enrollment
 from app.forms import SignUpForm, LoginForm, EnrollmentForm, DeleteEnrollmentForm
 # TODO
 # from gpa_calculator_xx import calculate_gpa
-from flask import render_template, redirect, url_for, request
+from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_required, login_user, logout_user, current_user
 import bcrypt
 
@@ -20,20 +20,38 @@ import bcrypt
 def index(): 
     return render_template('index.html')
 
-# TODO: from hwk-3
 @app.route('/users/signup', methods=['GET', 'POST'])
 def signup():
-    return "Work in progress..."
-    
-# TODO: from hwk-3
+    form = SignUpForm()
+    if form.validate_on_submit():
+        if User.query.get(form.id.data):                
+                flash("Not a valid ID. Please try again.")
+                return render_template('signup.html', form=form)
+        if form.passwd.data == form.passwd_confirm.data:
+            password_bytes = form.passwd.data.encode()
+            hashed = bcrypt.hashpw(password_bytes, bcrypt.gensalt())
+            user = User(id=form.id.data, name=form.name.data, about=form.about.data, passwd=hashed)
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for('index'))
+        flash("Passwords don't match.")
+    return render_template('signup.html', form=form)
+
 @app.route('/users/login', methods=['GET', 'POST'])
 def login():
-    return "Work in progress..."
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.get(form.id.data)
+        if user and bcrypt.checkpw(form.passwd.data.encode(), user.passwd):
+            login_user(user)
+            return redirect(url_for('list_enrollments'))
+        flash('Invalid ID or password.')
+    return render_template('login.html', form=form)
 
-# TODO: from hwk-3
 @app.route('/users/signout', methods=['GET', 'POST'])
 def signout():
-    return "Work in progress..."
+    logout_user()
+    return redirect(url_for('index'))
 
 # TODO
 @app.route('/enrollments')
