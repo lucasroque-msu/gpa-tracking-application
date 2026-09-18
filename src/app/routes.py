@@ -10,7 +10,7 @@ from app.models import User, Course, Enrollment
 from app.forms import SignUpForm, LoginForm, EnrollmentForm, DeleteEnrollmentForm
 # TODO
 # from gpa_calculator_xx import calculate_gpa
-from flask import render_template, redirect, url_for, request
+from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_required, login_user, logout_user, current_user
 import bcrypt
 
@@ -31,6 +31,7 @@ def signup():
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('index'))
+        flash("Passwords don't match.")
     return render_template('signup.html', form=form)
 
 @app.route('/users/login', methods=['GET', 'POST'])
@@ -41,6 +42,7 @@ def login():
         if user and bcrypt.checkpw(form.passwd.data.encode(), user.passwd):
             login_user(user)
             return redirect(url_for('list_enrollments'))
+        flash('Invalid ID or password.')
     return render_template('login.html', form=form)
 
 @app.route('/users/signout', methods=['GET', 'POST'])
