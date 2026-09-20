@@ -6,9 +6,11 @@ build-backend = "hatchling.build"
 name = "<your_name>lib"
 version = "0.0.1"
 authors = [
-  { name="<YOUR_NAME>", email="<YOUR_EMAIL>" },
+  { name="Samuel Simon" },
+  { name="Lucas Roque" },
+  { name="Sagun Shrestha" },
 ]
-description = "A small example package"
+description = "Calculates a credit-weighted GPA from letter grades"
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
@@ -18,5 +20,5 @@ classifiers = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/pypa/sampleproject"
-"Bug Tracker" = "https://github.com/pypa/sampleproject/issues"
+"Homepage" = "https://github.com/lucasroque-msu/gpa-tracking-application"
+"Bug Tracker" = "https://github.com/lucasroque-msu/gpa-tracking-application/issues"

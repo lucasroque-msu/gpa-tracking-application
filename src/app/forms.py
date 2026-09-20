@@ -1,7 +1,7 @@
 '''
 CS3250 - Software Development Methods and Tools
 Instructor: Thyago Mota
-Student:
+Student:Samuel Simon, Lucas Roque, Sagun Shrestha
 Description: Homework 03 - Forms for the User Authentication Web App
 '''
 
