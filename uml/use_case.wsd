@@ -1,3 +1,17 @@
 @startuml use_case
+skinparam actorStyle awesome
+left to right direction
 
-@enduml
+actor Student
+
+package "GPA Calculator" {
+  Student --> ("Sign Up")
+  Student --> ("Log In")
+  Student --> ("View Enrollments")
+  Student --> ("Add Course Enrollment")
+  Student --> ("Update Course Grade")
+  Student --> ("Delete Course Enrollment")
+  Student --> ("View GPA")
+}
+
+@endumlView
