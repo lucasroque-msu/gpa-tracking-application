@@ -45,11 +45,11 @@ Estimate a schedule for this project by completing the table below.
 
 |Phase|Task|Start|End|Duration|Deliverable|
 |---|---|---|---|---|---|
-|Modeling|Requirements Analysis|mm/dd/26|mm/dd/26|99 days|Use Case Diagram|
-|Modeling|Data Model|mm/dd/26|mm/dd/26|99 days|Class Diagram|
-|Construction|Coding|mm/dd/26|mm/dd/26|99 days|Code|
-|Construction|Testing|mm/dd/26|mm/dd/26|99 days|Test Report|
-|Deployment|Delivery|mm/dd/26|mm/dd/26|99 days|Final Commit/Push|
+|Modeling|Requirements Analysis|09/17/26|09/21/26|5 days|Use Case Diagram|
+|Modeling|Data Model|09/17/26|09/21/26|5 days|Class Diagram|
+|Construction|Coding|09/24/26|09/30/26|7 days|Code|
+|Construction|Testing|10/01/26|10/02/26|2 days|Test Report|
+|Deployment|Delivery|10/03/26|10/03/26|<1 day|Final Commit/Push|
 
 ## Team Roles
 
@@ -57,7 +57,9 @@ Assign roles to each team member by completing the table below. A member may tak
 
 |Name|Role(s)|
 |--|--|
-|name|manager,developer,tester,documenter|
+|Samuel Simon|manager, tester|
+|Lucas Roque|developer, tester|
+|Sagun Shrestha|documenter, tester|
 
 # Modeling Phase
 
@@ -115,7 +117,7 @@ Dockerfile
 Create a public GitHub repository for your project. Add all team members as collaborators. Share the URL of your repo with your instructor:  
 
 ```
-Project's GitHub Repository: <<URL>>
+Project's GitHub Repository: https://github.com/lucasroque-msu/gpa-tracking-application
 ```
 
 Following software development collaboration best practices, create a **dev** branch to manage beta versions of your project. Additionally, each team member should create local temporary branches for individual development and testing tasks. Once the **dev** branch reaches a stable state, merge it into the **main** branch. The **main** branch should be protected. 
