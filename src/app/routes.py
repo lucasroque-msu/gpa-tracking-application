@@ -34,7 +34,8 @@ def signup():
             db.session.add(user)
             db.session.commit()
             return redirect(url_for('index'))
-        flash("Passwords don't match.")
+        if form.passwd.data != form.passwd_confirm.data:
+            flash("Passwords don't match.")
     return render_template('signup.html', form=form)
 
 @app.route('/users/login', methods=['GET', 'POST'])
