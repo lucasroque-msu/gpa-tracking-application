@@ -5,13 +5,14 @@ left to right direction
 actor Student
 
 package "GPA Calculator" {
-  Student --> ("Sign Up")
-  Student --> ("Log In")
-  Student --> ("View Enrollments")
-  Student --> ("Add Course Enrollment")
-  Student --> ("Update Course Grade")
-  Student --> ("Delete Course Enrollment")
-  Student --> ("View GPA")
+  Student --> (Sign Up)
+  Student --> (Log In)
+  Student --> (Log Out)
+  Student --> (View Enrollments)
+  Student --> (Add Course Enrollment)
+  Student --> (Update Course Grade)
+  Student --> (Delete Course Enrollment)
+  Student --> (View GPA)
 }
 
-@endumlView
+@enduml
