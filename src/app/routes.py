@@ -54,11 +54,10 @@ def signout():
     logout_user()
     return redirect(url_for('index'))
 
-# TODO
 @app.route('/enrollments')
 @login_required
 def list_enrollments():
-    return "Work in progress..."
+    return render_template('enrollments.html', enrollments=current_user.enrollments, gpa=0, delete_form=DeleteEnrollmentForm())
 
 # TODO
 @app.route('/enrollments/delete/<course_prefix>/<course_number>', methods=['POST'])
