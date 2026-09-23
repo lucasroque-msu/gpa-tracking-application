@@ -147,6 +147,20 @@ At this stage, you are NOT expected to write automated tests. Instead, you shoul
 
 Create a Docker image to allow the instructor to run your project in a containerized environment. To meet this requirement, include a **Dockerfile** in your repository that enables the instructor to build the image and run the application as a container.
 
+Build the image from the project folder:
+
+```
+docker build -t gpa-tracker .
+```
+
+Run it as a container:
+
+```
+docker run -i --name gpa-tracker --publish 5000:5000 --rm gpa-tracker
+```
+
+Open [http://127.0.0.1:5000](http://127.0.0.1:5000) and sign up. The courses are preloaded.
+
 # Team Evaluation 
 
 Students should use this [form](https://forms.cloud.microsoft/r/RiQbbB9VhD) to evaluate their team members and complete a self-evaluation. This is a mandatory requirement, and the team's grade will be placed on hold until all members have submitted their evaluations.
