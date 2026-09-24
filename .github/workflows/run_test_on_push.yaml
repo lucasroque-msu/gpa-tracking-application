@@ -1,0 +1,31 @@
+name: Run Pytest on Feature Branches
+
+on:
+  push:
+    branches:    # all non main or dev branches
+      - '*'
+      - '!main'
+      - '!dev'
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest
+
+      - name: Run pytest
+        run: pytest tests/
