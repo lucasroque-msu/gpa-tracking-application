@@ -138,14 +138,38 @@ Before beginning implementation, a team representative must meet with the instru
 
 At this stage, you are NOT expected to write automated tests. Instead, you should perform manual testing, documenting your test results using the table provided below.
 
+**How we test:** whoever builds a feature runs the app and tries the normal case plus the obvious mistakes (wrong password, a taken ID, and so on), then adds the results below in the same PR as the code.
+
 |Functionality Tested|Date|Time|Result|
 |--|--|--|--|
-|Sign Up|99/99/23|99:99|passed|
-|...|...|...|...|
+|Courses data load: running `src/init_db.py` on a new database adds the 6 courses|09/23/26|18:51|passed|
+|Sign Up: a new ID with matching passwords creates the account and returns to the home page|09/23/26|18:51|passed|
+|Sign Up: passwords that don't match show "Passwords don't match." and no account is made|09/23/26|18:51|passed|
+|Sign Up: an ID that's already taken shows "Not a valid ID. Please try again." instead of crashing|09/23/26|18:51|passed|
+|Login: a wrong password or unknown ID shows "Invalid ID or password."|09/23/26|18:51|passed|
+|Login: the correct ID and password open the enrollments page|09/23/26|18:51|passed|
+|List of Enrollments: a new user sees an empty table and a GPA of 0.00|09/23/26|18:51|passed|
+|List of Enrollments: with two users, each sees only their own courses and grades (courses added directly to the database, since the create page isn't merged yet)|09/23/26|18:51|passed|
+|Sign Out: returns to the home page, and the enrollments page is blocked until you log in again|09/23/26|18:51|passed|
+|Deployment: the README's `docker build` and `docker run` commands start the app at http://127.0.0.1:5000, and sign up and login work in the container|09/23/26|18:51|passed|
 
 # Deployment Phase
 
 Create a Docker image to allow the instructor to run your project in a containerized environment. To meet this requirement, include a **Dockerfile** in your repository that enables the instructor to build the image and run the application as a container.
+
+Build the image from the project folder:
+
+```
+docker build -t gpa-tracker .
+```
+
+Run it as a container:
+
+```
+docker run -i --name gpa-tracker --publish 5000:5000 --rm gpa-tracker
+```
+
+Open [http://127.0.0.1:5000](http://127.0.0.1:5000) and sign up. The courses are preloaded.
 
 # Team Evaluation 
 
