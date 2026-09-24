@@ -27,6 +27,7 @@ def calculate_gpa(enrollments):
         
     quality_grade_points = 0.0
     credit_hours = 0
+    
 
     for enrollment in enrollments:
         credits = enrollment.get('credits')
