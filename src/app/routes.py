@@ -80,7 +80,7 @@ def create_enrollment():
         existing = Enrollment.query.filter_by(user_id = current_user.id, course_prefix = selectedCourse.prefix, course_number = selectedCourse.number).first()
         if existing:
                 flash("You're already enrolled in that course")
-                render_template('create_enrollment.html', form=form)
+                return render_template('create_enrollment.html', form=form)
 
         enrollment = Enrollment(user_id = current_user.id, course_prefix = selectedCourse.prefix, course_number = selectedCourse.number , grade = form.grade.data)
         db.session.add(enrollment)
