@@ -74,7 +74,14 @@ def create_enrollment():
     #f = fancy string
     form.course.choices = [(course.name, f"{course.prefix} {course.number} - {course.name}") for course in courseDB]
     if form.validate_on_submit():
+        #finding selected course information
         selectedCourse = Course.query.filter_by(name=form.course.data).first()
+        # checking DB for existing course
+        existing = Enrollment.query.filter_by(user_id = current_user.id, course_prefix = selectedCourse.prefix, course_number = selectedCourse.number).first()
+        if existing:
+                flash("You're already enrolled in that course")
+                render_template('create_enrollment.html', form=form)
+
         enrollment = Enrollment(user_id = current_user.id, course_prefix = selectedCourse.prefix, course_number = selectedCourse.number , grade = form.grade.data)
         db.session.add(enrollment)
         db.session.commit()
