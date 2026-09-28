@@ -30,10 +30,13 @@ def calculate_gpa(enrollments):
     
 
     for enrollment in enrollments:
-        credits = enrollment.get('credits')
-        grade_points = GRADE_POINTS.get(enrollment.get('grade'))
+        credits = enrollment.get('credits', 0)
+        grade_points = GRADE_POINTS.get(enrollment.get('grade'), 0.0)
 
         credit_hours += credits
         quality_grade_points += grade_points * credits
-    
+
+    if not credit_hours:
+        return 0.0
+        
     return quality_grade_points / credit_hours
