@@ -138,7 +138,9 @@ Before beginning implementation, a team representative must meet with the instru
 
 At this stage, you are NOT expected to write automated tests. Instead, you should perform manual testing, documenting your test results using the table provided below.
 
-**How we test:** whoever builds a feature runs the app and tries the normal case plus the obvious mistakes (wrong password, a taken ID, and so on), then adds the results below in the same PR as the code.
+**How we unit test:** For the GPA calculator package, we unit test by utilizing the pytest package and require successful test results on that module prior to merge. The test module can be found in `tests/test_gpa_calculator.py`.
+
+**How we test manually:** whoever builds a feature runs the app and tries the normal case plus the obvious mistakes (wrong password, a taken ID, and so on), then adds the results below in the same PR as the code.
 
 |Functionality Tested|Date|Time|Result|
 |--|--|--|--|
