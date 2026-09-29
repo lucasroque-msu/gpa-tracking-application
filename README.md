@@ -152,6 +152,11 @@ At this stage, you are NOT expected to write automated tests. Instead, you shoul
 |List of Enrollments: with two users, each sees only their own courses and grades (courses added directly to the database, since the create page isn't merged yet)|09/23/26|18:51|passed|
 |Sign Out: returns to the home page, and the enrollments page is blocked until you log in again|09/23/26|18:51|passed|
 |Deployment: the README's `docker build` and `docker run` commands start the app at http://127.0.0.1:5000, and sign up and login work in the container|09/23/26|18:51|passed|
+|Create Enrollment: picking a course and a grade adds it to the enrollments list|09/29/26|14:04|passed|
+|Create Enrollment: adding a course you already have shows "You're already enrolled in that course" and adds nothing|09/29/26|14:04|passed|
+|Delete Enrollment: Delete removes that course from the list and keeps the others|09/29/26|14:04|passed|
+|Delete Enrollment: a deleted course can be added again|09/29/26|14:04|passed|
+|Delete Enrollment: with two users, deleting a course removes only your own row|09/29/26|14:04|passed|
 
 # Deployment Phase
 
