@@ -1,6 +1,18 @@
 import pytest
 
-from src.gpa_calculator import calculate_gpa
+from src.sls_gpa_calculator import calculate_gpa
+
+
+@pytest.fixture
+def malformed_single_enrollment_missing_grade():
+    single_enrollment = [{"credits": 3}]
+    return single_enrollment
+
+
+@pytest.fixture
+def malformed_single_enrollment_missing_credits():
+    single_enrollment = [{"grade": "A"}]
+    return single_enrollment
 
 
 @pytest.fixture
@@ -58,20 +70,6 @@ def test_gpa_calculation_success_on_multiple_enrollments(multiple_enrollments):
     assert expected_gpa == calculated_gpa
 
 
-def test_gpa_calculation_success_on_gradeless_enrollment():
-    """
-    Tests the calculation of the GPA on an ungraded enrollment
-    returns 0.
-    """
-    empty_enrollment = {
-        "credits": 4,
-        "grade": "",
-    }
-
-    calculated_gpa = calculate_gpa([empty_enrollment])
-    assert 0.0 == calculated_gpa
-
-
 def test_gpa_calculation_skips_empty_enrollment(single_enrollment):
     """
     Tests the calculation of the GPA will ignore an empty enrollment
@@ -83,14 +81,14 @@ def test_gpa_calculation_skips_empty_enrollment(single_enrollment):
     assert 4.3 == calculated_gpa
 
 
-def test_gpa_calculation_skips_invalid_enrollment():
+def test_gpa_calculation_ignores_missing_credits(
+    malformed_single_enrollment_missing_credits,
+):
     """
     Tests the calculation of the GPA will return 0.0 if
     malformed enrollments are returned.
     """
-    malformed_enrollment = [{"grade": "A"}]
-
-    assert 0.0 == calculate_gpa(malformed_enrollment)
+    assert 0.0 == calculate_gpa(malformed_single_enrollment_missing_credits)
 
 
 def test_gpa_calculation_ignores_invalid_grade():
@@ -101,3 +99,43 @@ def test_gpa_calculation_ignores_invalid_grade():
     malformed_enrollment = [{"grade": "Z+", "credits": 4}]
 
     assert 0.0 == calculate_gpa(malformed_enrollment)
+
+
+def test_gpa_calculation_ignores_missing_grade(
+    malformed_single_enrollment_missing_grade,
+):
+    """
+    Tests the calculation of the GPA will ignore a missing
+    grade and return a 0.0 GPA for that entry.
+    """
+    assert 0.0 == calculate_gpa(malformed_single_enrollment_missing_grade)
+
+
+def test_gpa_calculation_only_calculates_complete_enrollment(
+    single_enrollment, malformed_single_enrollment_missing_credits
+):
+    """
+    Tests the calculation of multiple enrollments where one enrollment
+    with missing credits is ignored.
+    """
+    enrollments = single_enrollment + malformed_single_enrollment_missing_credits
+
+    assert 4.3 == calculate_gpa(enrollments)
+
+
+def test_gpa_calculation_ignores_multiple_malformed_enrollments(
+    single_enrollment,
+    malformed_single_enrollment_missing_credits,
+    malformed_single_enrollment_missing_grade,
+):
+    """
+    Tests the calculation of multiple enrollments where one enrollment is properly
+    formed and multiple enrollments are malformed.
+    """
+    enrollments = (
+        single_enrollment
+        + malformed_single_enrollment_missing_credits
+        + malformed_single_enrollment_missing_grade
+    )
+
+    assert 4.3 == calculate_gpa(enrollments)

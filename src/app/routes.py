@@ -9,7 +9,7 @@ from app import app, db
 from app.models import User, Course, Enrollment
 from app.forms import SignUpForm, LoginForm, EnrollmentForm, DeleteEnrollmentForm
 # TODO
-# from gpa_calculator_xx import calculate_gpa
+from sls_gpa_calculator_lib import calculate_gpa
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_required, login_user, logout_user, current_user
 import bcrypt
