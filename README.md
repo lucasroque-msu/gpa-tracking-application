@@ -138,7 +138,9 @@ Before beginning implementation, a team representative must meet with the instru
 
 At this stage, you are NOT expected to write automated tests. Instead, you should perform manual testing, documenting your test results using the table provided below.
 
-**How we test:** whoever builds a feature runs the app and tries the normal case plus the obvious mistakes (wrong password, a taken ID, and so on), then adds the results below in the same PR as the code.
+**How we unit test:** For the GPA calculator package, we unit test by utilizing the pytest package and require successful test results on that module prior to merge. The test module can be found in `tests/test_gpa_calculator.py`.
+
+**How we test manually:** whoever builds a feature runs the app and tries the normal case plus the obvious mistakes (wrong password, a taken ID, and so on), then adds the results below in the same PR as the code.
 
 |Functionality Tested|Date|Time|Result|
 |--|--|--|--|
@@ -157,6 +159,12 @@ At this stage, you are NOT expected to write automated tests. Instead, you shoul
 |Delete Enrollment: Delete removes that course from the list and keeps the others|09/29/26|14:04|passed|
 |Delete Enrollment: a deleted course can be added again|09/29/26|14:04|passed|
 |Delete Enrollment: with two users, deleting a course removes only your own row|09/29/26|14:04|passed|
+|Calculate GPA implementation in list of enrollments endpoint: default for no courses is 0.00|10/1/26|21:13|passed|
+|Calculate GPA implementation in list of enrollments endpoint: adding a course with a grade updates the GPA correctly|10/1/26|21:14|passed|
+|Calculate GPA implementation in list of enrollments endpoint: adding multiple courses with grades updates the GPA correctly|10/1/26|21:15|passed|
+|Calculate GPA implementation in list of enrollments endpoint: adding multiple courses with grades and removing one updates the GPA correctly|10/1/26|21:13|passed|
+|Calculate GPA implementation in list of enrollments endpoint: adding multiple courses with grades and removing all sets GPA back to 0.00|10/1/26|21:13|passed|
+
 
 # Deployment Phase
 
