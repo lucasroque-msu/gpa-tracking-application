@@ -107,7 +107,7 @@ def update_enrollment_grade(course_prefix, course_number):
         return redirect(url_for('list_enrollments'))
 
     if request.method == 'GET':
-        form.grade.data = enrollment.grade
+        form.grade.data = enrollment.grade # load the current grade on page load
 
     return render_template(
         'update_grade.html',
