@@ -164,6 +164,10 @@ At this stage, you are NOT expected to write automated tests. Instead, you shoul
 |Calculate GPA implementation in list of enrollments endpoint: adding multiple courses with grades updates the GPA correctly|10/1/26|21:15|passed|
 |Calculate GPA implementation in list of enrollments endpoint: adding multiple courses with grades and removing one updates the GPA correctly|10/1/26|21:13|passed|
 |Calculate GPA implementation in list of enrollments endpoint: adding multiple courses with grades and removing all sets GPA back to 0.00|10/1/26|21:13|passed|
+|Update grades: Update a single enrollment's grade and the enrollments list is updated as a result, along with the GPA|10/1/26|22:40|passed|
+|Update grades: Update multiple enrollments to Fs and validate GPA is set to 0.0|10/1/26|22:43|passed|
+|Update grades: Fail to enter non-existing grade in the update form.|10/1/26|22:43|passed|
+|Update grades: Update button exists on only rows with actual enrollments.|10/1/26|22:43|passed|
 
 
 # Deployment Phase
