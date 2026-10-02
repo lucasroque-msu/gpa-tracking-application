@@ -150,3 +150,18 @@ input[type="submit"] {
 .delete_button:hover {
     background: #b91c1c;
 }
+
+.enrollment-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.enrollment-actions form {
+    margin: 0;
+}
+
+.enrollment-actions input[type="submit"] {
+    width: auto;
+}
