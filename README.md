@@ -159,6 +159,12 @@ At this stage, you are NOT expected to write automated tests. Instead, you shoul
 |Delete Enrollment: Delete removes that course from the list and keeps the others|09/29/26|14:04|passed|
 |Delete Enrollment: a deleted course can be added again|09/29/26|14:04|passed|
 |Delete Enrollment: with two users, deleting a course removes only your own row|09/29/26|14:04|passed|
+|Calculate GPA implementation in list of enrollments endpoint: default for no courses is 0.00|10/1/26|21:13|passed|
+|Calculate GPA implementation in list of enrollments endpoint: adding a course with a grade updates the GPA correctly|10/1/26|21:14|passed|
+|Calculate GPA implementation in list of enrollments endpoint: adding multiple courses with grades updates the GPA correctly|10/1/26|21:15|passed|
+|Calculate GPA implementation in list of enrollments endpoint: adding multiple courses with grades and removing one updates the GPA correctly|10/1/26|21:13|passed|
+|Calculate GPA implementation in list of enrollments endpoint: adding multiple courses with grades and removing all sets GPA back to 0.00|10/1/26|21:13|passed|
+
 
 # Deployment Phase
 

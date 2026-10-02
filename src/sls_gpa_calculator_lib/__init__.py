@@ -29,12 +29,30 @@ def calculate_gpa(enrollments):
     credit_hours = 0
     
     for enrollment in enrollments:
-        grade_points = GRADE_POINTS.get(enrollment.get('grade'), 0.0)
-        credits = (enrollment.get('credits', 0) if grade_points else 0)
-        
-        credit_hours += credits
-        quality_grade_points += grade_points * credits
+        # since this is a list of Enrollment objects, we cannot use .get dict method
+        grade = enrollment.grade
+        credits = enrollment.course.credits
 
+        # skip malformed entries
+        if not grade or grade not in GRADE_POINTS:
+            continue
+        if credits is None:
+            continue
+
+        # if the credit is provided but malformed, skip it
+        try:
+            credits = float(credits)
+        except (TypeError, ValueError):
+            continue
+
+        # no negative credits
+        if credits <= 0:
+            continue
+
+        credit_hours += credits
+        quality_grade_points += GRADE_POINTS[grade] * credits
+
+    # all enrollments were malformed in some way, return base case
     if not credit_hours:
         return 0.0
         
