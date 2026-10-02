@@ -7,7 +7,7 @@ Description: Project 1 - GPA Calculator
 
 from app import app, db
 from app.models import User, Course, Enrollment
-from app.forms import SignUpForm, LoginForm, EnrollmentForm, DeleteEnrollmentForm
+from app.forms import SignUpForm, LoginForm, EnrollmentForm, DeleteEnrollmentForm, UpdateGradeForm
 from sls_gpa_calculator_lib import calculate_gpa
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_required, login_user, logout_user, current_user
@@ -89,3 +89,28 @@ def create_enrollment():
         return redirect(url_for('list_enrollments'))
     
     return render_template('create_enrollment.html', form=form)
+
+@app.route('/enrollments/update/<course_prefix>/<course_number>', methods=['GET', 'POST'])
+@login_required
+def update_enrollment_grade(course_prefix, course_number):
+    enrollment = Enrollment.query.filter_by(
+        user_id=current_user.id,
+        course_prefix=course_prefix,
+        course_number=course_number
+    ).first_or_404()
+
+    form = UpdateGradeForm()
+
+    if form.validate_on_submit():
+        enrollment.grade = form.grade.data
+        db.session.commit()
+        return redirect(url_for('list_enrollments'))
+
+    if request.method == 'GET':
+        form.grade.data = enrollment.grade
+
+    return render_template(
+        'update_grade.html',
+        form=form,
+        enrollment=enrollment
+    )
