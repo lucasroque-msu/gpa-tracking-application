@@ -45,11 +45,11 @@ Estimate a schedule for this project by completing the table below.
 
 |Phase|Task|Start|End|Duration|Deliverable|
 |---|---|---|---|---|---|
-|Modeling|Requirements Analysis|mm/dd/26|mm/dd/26|99 days|Use Case Diagram|
-|Modeling|Data Model|mm/dd/26|mm/dd/26|99 days|Class Diagram|
-|Construction|Coding|mm/dd/26|mm/dd/26|99 days|Code|
-|Construction|Testing|mm/dd/26|mm/dd/26|99 days|Test Report|
-|Deployment|Delivery|mm/dd/26|mm/dd/26|99 days|Final Commit/Push|
+|Modeling|Requirements Analysis|09/17/26|09/21/26|5 days|Use Case Diagram|
+|Modeling|Data Model|09/17/26|09/21/26|5 days|Class Diagram|
+|Construction|Coding|09/24/26|09/30/26|7 days|Code|
+|Construction|Testing|10/01/26|10/02/26|2 days|Test Report|
+|Deployment|Delivery|10/03/26|10/03/26|<1 day|Final Commit/Push|
 
 ## Team Roles
 
@@ -57,7 +57,9 @@ Assign roles to each team member by completing the table below. A member may tak
 
 |Name|Role(s)|
 |--|--|
-|name|manager,developer,tester,documenter|
+|Samuel Simon|manager, tester|
+|Lucas Roque|developer, tester|
+|Sagun Shrestha|documenter, tester|
 
 # Modeling Phase
 
@@ -115,7 +117,7 @@ Dockerfile
 Create a public GitHub repository for your project. Add all team members as collaborators. Share the URL of your repo with your instructor:  
 
 ```
-Project's GitHub Repository: <<URL>>
+Project's GitHub Repository: https://github.com/lucasroque-msu/gpa-tracking-application
 ```
 
 Following software development collaboration best practices, create a **dev** branch to manage beta versions of your project. Additionally, each team member should create local temporary branches for individual development and testing tasks. Once the **dev** branch reaches a stable state, merge it into the **main** branch. The **main** branch should be protected. 
@@ -136,14 +138,55 @@ Before beginning implementation, a team representative must meet with the instru
 
 At this stage, you are NOT expected to write automated tests. Instead, you should perform manual testing, documenting your test results using the table provided below.
 
+**How we unit test:** For the GPA calculator package, we unit test by utilizing the pytest package and require successful test results on that module prior to merge. The test module can be found in `tests/test_gpa_calculator.py`.
+
+**How we test manually:** whoever builds a feature runs the app and tries the normal case plus the obvious mistakes (wrong password, a taken ID, and so on), then adds the results below in the same PR as the code.
+
 |Functionality Tested|Date|Time|Result|
 |--|--|--|--|
-|Sign Up|99/99/23|99:99|passed|
-|...|...|...|...|
+|Courses data load: running `src/init_db.py` on a new database adds the 6 courses|09/23/26|18:51|passed|
+|Sign Up: a new ID with matching passwords creates the account and returns to the home page|09/23/26|18:51|passed|
+|Sign Up: passwords that don't match show "Passwords don't match." and no account is made|09/23/26|18:51|passed|
+|Sign Up: an ID that's already taken shows "Not a valid ID. Please try again." instead of crashing|09/23/26|18:51|passed|
+|Login: a wrong password or unknown ID shows "Invalid ID or password."|09/23/26|18:51|passed|
+|Login: the correct ID and password open the enrollments page|09/23/26|18:51|passed|
+|List of Enrollments: a new user sees an empty table and a GPA of 0.00|09/23/26|18:51|passed|
+|List of Enrollments: with two users, each sees only their own courses and grades (courses added directly to the database, since the create page isn't merged yet)|09/23/26|18:51|passed|
+|Sign Out: returns to the home page, and the enrollments page is blocked until you log in again|09/23/26|18:51|passed|
+|Deployment: the README's `docker build` and `docker run` commands start the app at http://127.0.0.1:5000, and sign up and login work in the container|09/23/26|18:51|passed|
+|Create Enrollment: picking a course and a grade adds it to the enrollments list|09/29/26|14:04|passed|
+|Create Enrollment: adding a course you already have shows "You're already enrolled in that course" and adds nothing|09/29/26|14:04|passed|
+|Delete Enrollment: Delete removes that course from the list and keeps the others|09/29/26|14:04|passed|
+|Delete Enrollment: a deleted course can be added again|09/29/26|14:04|passed|
+|Delete Enrollment: with two users, deleting a course removes only your own row|09/29/26|14:04|passed|
+|Calculate GPA implementation in list of enrollments endpoint: default for no courses is 0.00|10/1/26|21:13|passed|
+|Calculate GPA implementation in list of enrollments endpoint: adding a course with a grade updates the GPA correctly|10/1/26|21:14|passed|
+|Calculate GPA implementation in list of enrollments endpoint: adding multiple courses with grades updates the GPA correctly|10/1/26|21:15|passed|
+|Calculate GPA implementation in list of enrollments endpoint: adding multiple courses with grades and removing one updates the GPA correctly|10/1/26|21:13|passed|
+|Calculate GPA implementation in list of enrollments endpoint: adding multiple courses with grades and removing all sets GPA back to 0.00|10/1/26|21:13|passed|
+|Update grades: Update a single enrollment's grade and the enrollments list is updated as a result, along with the GPA|10/1/26|22:40|passed|
+|Update grades: Update multiple enrollments to Fs and validate GPA is set to 0.0|10/1/26|22:43|passed|
+|Update grades: Fail to enter non-existing grade in the update form.|10/1/26|22:43|passed|
+|Update grades: Update button exists on only rows with actual enrollments.|10/1/26|22:43|passed|
+
 
 # Deployment Phase
 
 Create a Docker image to allow the instructor to run your project in a containerized environment. To meet this requirement, include a **Dockerfile** in your repository that enables the instructor to build the image and run the application as a container.
+
+Build the image from the project folder:
+
+```
+docker build -t gpa-tracker .
+```
+
+Run it as a container:
+
+```
+docker run -i --name gpa-tracker --publish 5000:5000 --rm gpa-tracker
+```
+
+Open [http://127.0.0.1:5000](http://127.0.0.1:5000) and sign up. The courses are preloaded.
 
 # Team Evaluation 
 

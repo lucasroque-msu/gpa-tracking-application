@@ -6,6 +6,9 @@
     <title>{{ title }}</title>
 </head>
 <body>
+{% for message in get_flashed_messages() %}
+    <p class="error">{{ message }}</p>
+{% endfor %}
 {% block main %}
 {% endblock %}
 </body>

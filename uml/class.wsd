@@ -1,4 +1,30 @@
 @startuml class
 left to right direction
 
+class User {
+  +id: str <<PK>>
+  +name: str
+  +about: str
+  +passwd: LargeBinary
+}
+
+class Course {
+  +prefix: str <<PK>>
+  +number: str <<PK>>
+  +name: str
+  +credits: int
+}
+
+class Enrollment {
+  +user_id: str <<PK, FK>>
+  +course_prefix: str <<PK, FK>>
+  +course_number: str <<PK, FK>>
+  +grade: str
+}
+
+User "1" *--> "0..n" Enrollment : has >
+Enrollment "0..n" --> "1" Course : has >
+
+User "*" .. "*" Course : enrolled in >
+
 @enduml

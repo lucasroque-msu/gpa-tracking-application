@@ -1,0 +1,59 @@
+'''
+CS3250 - Software Development Methods and Tools
+Instructor: Thyago Mota
+Student(s):Samuel Simon, Lucas Roque, Sagun Shrestha
+Description: Project 1 - GPA Calculator
+'''
+
+# grade points for the traditional college letter grade scale, A+ included (so GPA can exceed 4.0)
+GRADE_POINTS = {
+    'A+': 4.3, 'A': 4.0, 'A-': 3.7,
+    'B+': 3.3, 'B': 3.0, 'B-': 2.7,
+    'C+': 2.3, 'C': 2.0, 'C-': 1.7,
+    'D+': 1.3, 'D': 1.0, 'D-': 0.7,
+    'F': 0.0
+}
+
+def calculate_gpa(enrollments):
+    '''
+    Computes the credit-weighted GPA from a list of dictionary-like enrollments.
+    Each enrollment is expected to provide a 'grade' key (e.g. 'A+', 'B-', ...)
+    and a 'credits' key (the number of credit hours for the course).
+    Enrollments with no grade yet, or an unrecognized grade, are ignored.
+    Returns 0 when there are no graded credits to average.
+    '''
+    if not enrollments:
+        return 0.0
+        
+    quality_grade_points = 0.0
+    credit_hours = 0
+    
+    for enrollment in enrollments:
+        # since this is a list of Enrollment objects, we cannot use .get dict method
+        grade = enrollment.grade
+        credits = enrollment.course.credits
+
+        # skip malformed entries
+        if not grade or grade not in GRADE_POINTS:
+            continue
+        if credits is None:
+            continue
+
+        # if the credit is provided but malformed, skip it
+        try:
+            credits = float(credits)
+        except (TypeError, ValueError):
+            continue
+
+        # no negative credits
+        if credits <= 0:
+            continue
+
+        credit_hours += credits
+        quality_grade_points += GRADE_POINTS[grade] * credits
+
+    # all enrollments were malformed in some way, return base case
+    if not credit_hours:
+        return 0.0
+        
+    return quality_grade_points / credit_hours
