@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block main %}
+    <h2>Update Grade: {{ enrollment.course.prefix }} {{ enrollment.course.number }}</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <p>{{ form.grade.label }}<br>{{ form.grade() }}</p>
+        {% for error in form.grade.errors %}
+            <p class="error">{{ error }}</p>
+        {% endfor %}
+        {{ form.submit(class_='update_button') }}
+    </form>
+{% endblock %}
